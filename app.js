@@ -3,7 +3,7 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
-const credentials = require('./modules');
+const credentials = require('./src/modules');
 
 const app = express();
 
@@ -38,6 +38,8 @@ let transporter = nodemailer.createTransport({
     }
 });
 
+// GET Responses:
+
 app.get('/', (req,res) => {
     res.send('Welcome to reportly');
 })
@@ -49,6 +51,8 @@ app.get('/create', (req,res) => {
 app.get('/change', (req,res) => {
     res.render('change_cols', {layout: false});
 })
+
+// POST Responses
 
 app.post('/send', (req,res) => {
     let create_table_name = req.body.table_name;
