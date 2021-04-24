@@ -3,6 +3,7 @@ module.exports = {
     user: "sql6406059",
     password: "xS6yR7ljMf",
     database: "sql6406059",
-    email: "chinmaykarmokar@gmail.com",
-    pass: "!champion"
+    email: "resultly@gmail.com",
+    pass: "!champion",
+    name: "Chinmay Karmokar"
 }
