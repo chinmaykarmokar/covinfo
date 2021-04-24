@@ -4,6 +4,8 @@ const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const credentials = require('./src/modules');
+const fs = require("fs");
+const fastcsv = require('fast-csv');
 
 const app = express();
 
@@ -50,6 +52,14 @@ app.get('/create', (req,res) => {
 
 app.get('/change', (req,res) => {
     res.render('change_cols', {layout: false});
+})
+
+app.get('/insert', (req,res) => {
+    res.render('insert', {layout: false});
+})
+
+app.get('/show', (req,res) => {
+    res.render('preview', {layout: false});
 })
 
 // POST Responses
@@ -131,6 +141,76 @@ app.post('/response', (req,res) => {
         }  
     })
 }) 
+
+app.post('/inserted', (req,res) => {
+    let name_of_table = req.body.table;
+    let name = req.body.name;
+    let rollNo = req.body.roll;
+    let sub1 = req.body.sub2;
+    let sub2 = req.body.sub2;
+    let sub3 = req.body.sub3;
+    let sub4 = req.body.sub4;
+    let sub5 = req.body.sub5;
+
+    let sql = "SHOW COLUMNS FROM " + name_of_table;
+
+    connection.query(sql, (err, rows, fields) => {
+        if (err) throw err;
+
+        let insert = "INSERT INTO" + ' ' + name_of_table + ' ' + "(" + rows[0].Field + "," + rows[1].Field + "," + rows[2].Field + "," + rows[3].Field + "," + rows[4].Field + "," + rows[5].Field + "," + rows[6].Field + ") VALUES ?"
+
+        let from_form = [name,rollNo,sub1,sub2,sub3,sub4,sub5];
+        console.log(from_form);
+        let values = [];
+        let final_values = values.push(from_form);
+        console.log(values);
+
+        connection.query(insert, [values], (err) => {
+            try {
+                if (err) {
+                    res.send(err);
+                    console.log(err);
+                }
+                else {
+                    res.send('No errors found. Values inserted');
+                }
+            }
+    
+            catch (err) {
+                console.log(err);
+            }  
+        })
+    })
+})
+
+let file = [];
+
+app.post('/preview', (req,res) => {
+    let name_of_table = req.body.table;
+    file.push(req.body.file);
+    console.log(name_of_table);
+    console.log(file);
+    let email_add = req.body.email;
+
+    
+    const createCSVFile = fs.createWriteStream(file[file.length - 1] + ".csv", { flags: 'a' });
+
+    let select = "SELECT * FROM " + name_of_table;
+    console.log(select);
+
+    connection.query(select, (err,result,fields) => {
+        if (err) console.log(err);
+
+        const jsonData = JSON.parse(JSON.stringify(result));
+
+        fastcsv.write(jsonData, { headers: true })
+            .on("finish", () => {
+                res.send('Written Successfully')
+                console.log("Written successfully");
+            })
+        .pipe(createCSVFile);
+    })
+})
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
