@@ -4,5 +4,6 @@ module.exports = {
     password: "xS6yR7ljMf",
     database: "sql6406059",
     email: "resultly@gmail.com",
-    pass: "!champion"
+    pass: "!champion",
+    name: "Chinmay Karmokar"
 }
