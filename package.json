@@ -1,7 +1,7 @@
 {
   "name": "resultly",
   "version": "1.0.0",
-  "description": "",
+  "description": "Create reports and share with reportly!",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,8 +13,18 @@
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.3.0",
+    "fast-csv": "^4.3.6",
     "mysql": "^2.18.1",
     "nodemailer": "^6.5.0",
     "nodemon": "^2.0.7"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chinmaykarmokar/reportly.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chinmaykarmokar/reportly/issues"
+  },
+  "homepage": "https://github.com/chinmaykarmokar/reportly#readme"
 }
