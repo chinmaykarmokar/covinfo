@@ -62,13 +62,24 @@ app.get('/show', (req,res) => {
     res.render('preview', {layout: false});
 })
 
+app.get('/update', (req,res) => {
+    res.render('update', {layout: false});
+})
+
 // POST Responses
 
 app.post('/send', (req,res) => {
     let create_table_name = req.body.table_name;
+    let col_1 = req.body.col1;
+    let col_2 = req.body.col2;
+    let col_3 = req.body.col3;
+    let col_4 = req.body.col4;
+    let col_5 = req.body.col5;
+    let col_6 = req.body.col6;
     let emailID = req.body.email;
 
-    let create_table = "CREATE TABLE" + ' ' + create_table_name + ' ' + "(Student_Name VARCHAR(255), Roll_No VARCHAR(255), Subject1 INT(10), Subject2 INT(10), Subject3 INT(10), Subject4 INT(10), Subject5 INT(10), PRIMARY KEY (Roll_No))";
+    // let create_table = "CREATE TABLE" + ' ' + create_table_name + ' ' + "(Student_Name VARCHAR(255), Roll_No VARCHAR(255), Subject1 INT(10), Subject2 INT(10), Subject3 INT(10), Subject4 INT(10), Subject5 INT(10), PRIMARY KEY (Roll_No))";
+    let create_table = "CREATE TABLE" + ' ' + create_table_name + ' ' + "(Student_Name VARCHAR(255), Roll_No VARCHAR(255), " + col_1 + " INT(10), " +  col_2 + " INT(10), " + col_3 + " INT(10), " + col_4 + " INT(10), " + col_5 + " INT(10), " + col_6 + " INT(10), PRIMARY KEY (Roll_No))";
     
     connection.query(create_table,(err) => {
         if (err) throw err;
@@ -206,6 +217,21 @@ app.post('/preview', (req,res) => {
         //     res.set('Content-Type', 'text/csv');
         //     res.status(200).send(csv);
         // });
+    })
+})
+
+app.post('/updated', (req,res) => {
+    let tableName = req.body.table;
+    let column = req.body.col;
+    let roll = req.body.roll;
+    let newVal = req.body.newVal;
+
+    let update_query = "UPDATE " + tableName + " SET " + column + " =" + "'" + newVal + "'" + " WHERE Roll_No = " + "'" + roll + "'";
+
+    connection.query(update_query, (err,result) => {
+        if (err) throw err;
+
+        res.send('Values provided by you have been updated by the values provided by you...')
     })
 })
 
