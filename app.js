@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const credentials = require('./src/modules');
 const fs = require("fs");
-const fastcsv = require('fast-csv');
+const json2csv = require('json2csv').parse;
 
 const app = express();
 
@@ -191,24 +191,21 @@ app.post('/preview', (req,res) => {
     console.log(name_of_table);
     console.log(file);
     let email_add = req.body.email;
-
     
-    const createCSVFile = fs.createWriteStream(file[file.length - 1] + ".csv", { flags: 'a' });
-
     let select = "SELECT * FROM " + name_of_table;
-    console.log(select);
 
     connection.query(select, (err,result,fields) => {
-        if (err) console.log(err);
-
-        const jsonData = JSON.parse(JSON.stringify(result));
-
-        fastcsv.write(jsonData, { headers: true })
-            .on("finish", () => {
-                res.send('Written Successfully')
-                console.log("Written successfully");
-            })
-        .pipe(createCSVFile);
+        const csvString = json2csv(result);
+        res.setHeader('Content-disposition', 'attachment; filename=' + file[file.length - 1] + '.csv');
+        res.set('Content-Type', 'text/csv');
+        res.status(200).send(csvString);
+        
+        // json2csv({ data: result, fields: fields }, function(err, csv) {
+        //     //res.setHeader('Content-disposition', 'attachment; filename=data.csv');
+        //     res.setHeader('Content-disposition', 'attachment; filename=' + file[file.length - 1] + '.csv');
+        //     res.set('Content-Type', 'text/csv');
+        //     res.status(200).send(csv);
+        // });
     })
 })
 
