@@ -1,2 +1,2 @@
-# reportly
-Create reports and share with reportly!
+# Covinfo
+Get Hospital wise data with Covinfo...
