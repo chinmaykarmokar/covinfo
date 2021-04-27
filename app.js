@@ -43,7 +43,7 @@ let transporter = nodemailer.createTransport({
 // GET Responses:
 
 app.get('/', (req,res) => {
-    res.send('Welcome to reportly');
+    res.send('Welcome to Resultly...!');
 })
 
 app.get('/create', (req,res) => {
