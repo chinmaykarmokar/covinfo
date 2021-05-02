@@ -5,17 +5,21 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const credentials = require('./src/modules');
 const fs = require("fs");
+const favicon = require('serve-favicon');
 const json2csv = require('json2csv').parse;
-const http = require('http');
 
 const app = express();
 
+// Serving Static Files
+app.use(express.static(__dirname + '/public'));
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
+
 // View engine setup
 app.engine('handlebars', exphbs());
-app.set('view engine','handlebars');
+app.set('view engine', 'handlebars');
 
 // Using Body-Parser middleware
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 let connection = mysql.createConnection({
@@ -36,52 +40,52 @@ let transporter = nodemailer.createTransport({
     service: 'gmail',
     secure: true,
     auth: {
-      user: credentials.email,
-      pass: credentials.pass
+        user: credentials.email,
+        pass: credentials.pass
     }
 });
 
 // GET Responses:
 
-app.get('/', (req,res) => {
-    res.send('Welcome to Resultly...!');
+app.get('/', (req, res) => {
+    res.render('home', {layout: false});
 })
 
-app.get('/createHospital', (req,res) => {
-    res.render('createHospital', {layout:false});
+app.get('/createHospital', (req, res) => {
+    res.render('createHospital', { layout: false });
 })
 
-app.get('/modifyHospital', (req,res) => {
-    res.render('modifyhospital', {layout: false});
+app.get('/modifyHospital', (req, res) => {
+    res.render('modifyhospital', { layout: false });
 })
 
-app.get('/insert', (req,res) => {
-    res.render('insert', {layout: false});
+app.get('/insert', (req, res) => {
+    res.render('insert', { layout: false });
 })
 
-app.get('/show', (req,res) => {
-    res.render('preview', {layout: false});
+app.get('/show', (req, res) => {
+    res.render('preview', { layout: false });
 })
 
-app.get('/update', (req,res) => {
-    res.render('update', {layout: false});
+app.get('/update', (req, res) => {
+    res.render('update', { layout: false });
 })
 
-app.get('/text', (req,res) => {
-    res.render('text', {layout:false});
+app.get('/text', (req, res) => {
+    res.render('text', { layout: false });
 })
 
 // POST Responses
 
-app.post('/tableCreated', (req,res) => {
+app.post('/tableCreated', (req, res) => {
     let create_table_name = req.body.table_name;
     let emailID = req.body.email;
 
     // let create_table = "CREATE TABLE" + ' ' + create_table_name + ' ' + "(Student_Name VARCHAR(255), Roll_No VARCHAR(255), Subject1 INT(10), Subject2 INT(10), Subject3 INT(10), Subject4 INT(10), Subject5 INT(10), PRIMARY KEY (Roll_No))";
     // let create_table = "CREATE TABLE" + ' ' + create_table_name + ' ' + "Number_Of_New_Covid-19_Patients_Admiited_Today INT(10), Number_Of_Patients_Discharged_Today INT(10), Number_Of_Patients_Critical INT(10), Number_Of_Beds_Available INT(10), Number_Of_ICU_Beds_Available INT(10), Number_Of_Remdesivir_Injections_In_Stock INT(10), Number_Of_Tocilizumab_Injections_In_Stock, Amount_Of_Oxygen_Left VARCHAR(255), Date DATE" + col_1 + " INT(10), " +  col_2 + " INT(10), " + col_3 + " INT(10), " + col_4 + " INT(10), " + col_5 + " INT(10), PRIMARY KEY (Roll_No))";
-    let create_table = "CREATE TABLE" + ' ' + create_table_name + ' ' + "(Number_Of_New_Covid19_Patients_Admiited_Today INT(10), Number_Of_Patients_Discharged_Today INT(10), Number_Of_Patients_Critical INT(10), Number_Of_Beds_Available INT(10), Number_Of_ICU_Beds_Available INT(10), Number_Of_Remdesivir_Injections_In_Stock INT(10), Number_Of_Tocilizumab_Injections_In_Stock INT(10), Amount_Of_Oxygen_Left VARCHAR(255), Date DATE)";
-    
-    connection.query(create_table,(err) => {
+    let create_table = "CREATE TABLE" + ' ' + create_table_name + ' ' + "(Number_Of_New_Covid19_Patients_Admiited_Today INT(10), Number_Of_Patients_Discharged_Today INT(10), Number_Of_Active_Patients INT(10), Number_Of_Deaths_Today INT(10), Number_Of_Patients_Critical INT(10), Number_Of_Beds_Available INT(10), Number_Of_ICU_Beds_Available INT(10), Number_Of_Remdesivir_Injections_In_Stock INT(10), Number_Of_Tocilizumab_Injections_In_Stock INT(10), Amount_Of_Oxygen_Left VARCHAR(255), Date TIMESTAMP, PRIMARY KEY (Date))";
+
+    connection.query(create_table, (err) => {
         if (err) throw err;
 
         let mailOptions = {
@@ -93,8 +97,8 @@ app.post('/tableCreated', (req,res) => {
             <p>You can edit them as per your preferred column names later under "Modify Your Hospital Table" section...</p>
             <p>Use these credentials for further use... Thank you!</p>`
         };
-          
-        transporter.sendMail(mailOptions, function(error, info){
+
+        transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
             } else {
@@ -102,59 +106,11 @@ app.post('/tableCreated', (req,res) => {
             }
         });
 
-        res.send('Table for your Hospital created');    
+        res.send('Table for your Hospital created');
     })
 })
 
-app.post('/modifiedCols', (req,res) => {
-    let table_name = req.body.table;
-    let new_column1 = req.body.col1;
-    let new_column2 = req.body.col2;
-    let new_column3 = req.body.col3;
-    let new_column4 = req.body.col4;
-    let new_column5 = req.body.col5;
-    let new_column6 = req.body.col6;
-    let new_column7 = req.body.col7;
-    let new_column8 = req.body.col8;
-    let emailID = req.body.email;
-
-    let change_col_name = "ALTER TABLE" + ' ' + table_name + ' ' + "CHANGE Number_Of_New_Covid19_Patients_Admiited_Today" + ' ' + new_column1 + ' ' + "INT(10), CHANGE Number_Of_Patients_Discharged_Today" + ' ' + new_column2 + ' ' + "INT(10), CHANGE Number_Of_Patients_Critical" + ' ' + new_column3 + ' ' + "INT(10), CHANGE Number_Of_Beds_Available" + ' ' + new_column4 + ' ' + "INT(10), CHANGE Number_Of_ICU_Beds_Available" + ' ' + new_column5 + ' ' + "INT(10), CHANGE Number_Of_Remdesivir_Injections_In_Stock" + ' ' + new_column6 + ' ' + "INT(10), CHANGE Number_Of_Tocilizumab_Injections_In_Stock" + ' ' + new_column7 + ' ' + "INT(10), CHANGE Amount_Of_Oxygen_Left" + ' ' + new_column8 + ' ' + "INT(10)";
-
-    connection.query(change_col_name, (err) => {
-        let mailOptions = {
-            from: credentials.email,
-            to: emailID,
-            subject: 'Covinfo: You have updated your columns!',
-            html: '<p>Thanks for using Covinfo, these are the columns that you have updated;</p><b>Table Name: ' + table_name + `</b>
-            <p>` + new_column1 + ', ' + new_column2 + ', ' + new_column3 + ', ' + new_column4 + ', ' + new_column5 + `</p>
-            <p>You will require to use these column values now for feeding values into your table later.</p>
-            <p>Thank You!</p>`
-        };
-          
-        transporter.sendMail(mailOptions, function(error, info){
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Email sent: ' + info.response);
-            }
-        });
-
-        try {
-            if (err) {
-                throw err;
-            }
-            else {
-                res.send('No errors found. Column name has been changed');
-            }
-        }
-
-        catch (err) {
-            console.log(err);
-        }  
-    })
-}) 
-
-app.post('/inserted', (req,res) => {
+app.post('/inserted', (req, res) => {
     let name_of_table = req.body.table;
     let field1 = req.body.field1;
     let field2 = req.body.field2;
@@ -164,15 +120,18 @@ app.post('/inserted', (req,res) => {
     let field6 = req.body.field6;
     let field7 = req.body.field7;
     let field8 = req.body.field8;
+    let field9 = req.body.field9;
+    let field10 = req.body.field10;
+    let date = req.body.date;
 
     let sql = "SHOW COLUMNS FROM " + name_of_table;
 
     connection.query(sql, (err, rows, fields) => {
         if (err) throw err;
 
-        let insert = "INSERT INTO" + ' ' + name_of_table + ' ' + "(" + rows[0].Field + "," + rows[1].Field + "," + rows[2].Field + "," + rows[3].Field + "," + rows[4].Field + "," + rows[5].Field + "," + rows[6].Field + "," + rows[7].Field + ") VALUES ?"
+        let insert = "INSERT INTO" + ' ' + name_of_table + ' ' + "(" + rows[0].Field + "," + rows[1].Field + "," + rows[2].Field + "," + rows[3].Field + "," + rows[4].Field + "," + rows[5].Field + "," + rows[6].Field + "," + rows[7].Field + "," + rows[8].Field + "," + rows[9].Field + "," + rows[10].Field + ") VALUES ?"
 
-        let from_form = [field1,field2,field3,field4,field5,field6,field7,field8];
+        let from_form = [field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, date];
         console.log(from_form);
         let values = [];
         let final_values = values.push(from_form);
@@ -188,26 +147,26 @@ app.post('/inserted', (req,res) => {
                     res.send('No errors found. Values inserted');
                 }
             }
-    
+
             catch (err) {
                 console.log(err);
-            }  
+            }
         })
     })
 })
 
 let file = [];
 
-app.post('/preview', (req,res) => {
+app.post('/preview', (req, res) => {
     let name_of_table = req.body.table;
     file.push(req.body.file);
     console.log(name_of_table);
     console.log(file);
     let email_add = req.body.email;
-    
+
     let select = "SELECT * FROM " + name_of_table;
 
-    connection.query(select, (err,result,fields) => {
+    connection.query(select, (err, result, fields) => {
         const csvString = json2csv(result);
         res.setHeader('Content-disposition', 'attachment; filename=' + file[file.length - 1] + '.csv');
         res.set('Content-Type', 'text/csv');
@@ -215,42 +174,51 @@ app.post('/preview', (req,res) => {
     })
 })
 
-app.post('/updated', (req,res) => {
+app.post('/updated', (req, res) => {
     let tableName = req.body.table;
     let column = req.body.col;
-    let roll = req.body.roll;
+    let date = req.body.date;
     let newVal = req.body.newVal;
 
-    let update_query = "UPDATE " + tableName + " SET " + column + " =" + "'" + newVal + "'" + " WHERE Roll_No = " + "'" + roll + "'";
+    let update_query = "UPDATE " + tableName + " SET " + column + " =" + "'" + newVal + "'" + " WHERE Date = " + "'" + date + "'";
 
-    connection.query(update_query, (err,result) => {
+    connection.query(update_query, (err, result) => {
         if (err) throw err;
 
         res.send('Values provided by you have been updated by the values provided by you...')
     })
 })
 
-app.post('/yourdata', (req,res) => {
+app.post('/yourdata', (req, res) => {
     let nameOfTable = req.body.name;
-    let nameOfPatient = req.body.date;
+    let date = req.body.date;
+    let fileName = req.body.file;
+    file.push(fileName);
 
-    let showQuery = "SELECT * FROM dummyHospital";
+    let showQuery = "SELECT * FROM " + nameOfTable + " WHERE Date = " + "'" + date + "'";
+    console.log(showQuery);
 
-    connection.query(showQuery, (err,result,fields) => {
+    connection.query(showQuery, (err, result, fields) => {
         if (err) throw err;
 
-        //Object.keys(result[0])[0];
-        //res.send(Object.keys(result[0])[0]);
+        let textToSend = 
+        `DAILY COVID-19 REPORT FROM ` + nameOfTable + ` FOR: ` + date + `\n` +
+        ` ` + `\n` +
+        `Number of New Patients admitted today: ` + Object.values(result[0])[0] + `\n` +
+        `Number Of Patients Discharged Today: ` + Object.values(result[0])[1] + `\n` +
+        `Number Of Active Patients: ` + Object.values(result[0])[2] + `\n` +
+        `Number Of Deaths Today: ` + Object.values(result[0])[3] + `\n` +
+        `Number Of Patients Critical: ` + Object.values(result[0])[4] + `\n` +
+        `Number Of Beds Avaialble: ` + Object.values(result[0])[5] + `\n` +
+        `Number Of ICU Beds Available: ` + Object.values(result[0])[6] + `\n` +
+        `Number Of Remdesivir Injections In Stock: ` + Object.values(result[0])[7] + `\n` +
+        `Number Of Tocilizumab Injections In Stock: ` + Object.values(result[0])[8] + `\n` +
+        `Amount Of Oxygen Left: ` + Object.values(result[0])[9];
 
-        //let newArray = result.map(x => Object.values(x)[0]);
-        //res.send(newArray);
-
-        let textToSend = `The Number of Beds available is:` + Object.values(result[0])[0];
-
-        res.setHeader('Content-disposition', 'attachment; filename=text.txt');
+        res.setHeader('Content-disposition', 'attachment; filename=' + fileName);
         res.set('Content-Type', 'text/csv');
         res.status(200).send(textToSend);
-    
+
     })
 })
 

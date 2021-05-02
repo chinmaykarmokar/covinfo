@@ -1,0 +1,14 @@
+.introDiv {
+    background-color: #00cccc;
+    height: 300px;
+    /* border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%; */
+}
+
+.curve {
+    background-color: #00cccc;
+    height: 50px;
+    margin-top: -35px;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
