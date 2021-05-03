@@ -1,14 +1,74 @@
 .introDiv {
-    background-color: #00cccc;
-    height: 300px;
-    /* border-bottom-left-radius: 50%;
-    border-bottom-right-radius: 50%; */
+    background-image: linear-gradient(#99ffff, #e6ffff);
+    height: 400px;
+    text-align: center;
+}
+
+.desc {
+    padding: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.start {
+    border: none;
+    width: 200px;
+    height: 50px;
+    border-radius: 15px;
+    color: #fff;
+    font-family: Bree Serif;
+    background-color: #000099;
+    box-shadow: 0px 0px 3px 1.5px rgba(0,0,153,0.3);
 }
 
 .curve {
-    background-color: #00cccc;
+    background-color: #e6ffff;
     height: 50px;
     margin-top: -35px;
     border-bottom-left-radius: 50%;
     border-bottom-right-radius: 50%;
+    box-shadow: 0px 4px 4px -2px rgba(0,0,0,0.5);
+}
+
+nav {
+    background-color: #fff;
+    box-shadow: 0px 0px 4px 2px rgba(0,0,153,0.3);
+    /* height: 70px; */
+}
+
+.navbar {
+    padding: 15px;
+}
+
+.info {
+    padding: 5px;
+}
+
+.fa-pills {
+    color: #000099;
+}
+
+.fa-capsules {
+    color: #000099;
+}
+
+hr.introHr {
+    border: 1px solid #000099;
+    width: 38%;
+}
+
+hr.serviceHr {
+    width: 25%;
+    border: 1px solid #000099;
+}
+
+.provideCard {
+    height: 375px;
+    padding: 5px;
+    margin-top: 35px;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.25);
+    margin-left: 5px;
+    margin-right: 5px;
 }
