@@ -7,12 +7,125 @@
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+       <link rel="preconnect" href="https://fonts.gstatic.com">
+       <link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet">
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
        <link rel="stylesheet" type="text/css" href="../css/styles.css">
     </head>
     <body>
+        <nav class="navbar navbar-expand-md">
+            <a class="navbar-brand" href="/">Covinfo</a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            Start Here!
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/create">Create Hospital Table</a>
+                            <a class="dropdown-item" href="/insert">Feed Values</a>
+                            <a class="dropdown-item" href="/update">Update Values</a>
+                            <a class="dropdown-item" href="/csv">Generate CSV</a>
+                            <a class="dropdown-item" href="/text">Generate Text or Word File</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
         <div class="jumbotron introDiv">
-            <h1>Welcome to Covinfo!</h1>
+            <h1 style="font-family: 'Bree Serif';"><i class="fas fa-pills"></i> &nbsp; Welcome to Covinfo! &nbsp; <i class="fas fa-capsules"></i></h1>
+            <hr class="introHr">
+            <br>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6 desc">
+                    <h5>Get Hospital wise data for number of new Covid-19 patients, number of discharges, beds available, medicines available, etc. with Covinfo...</h5>
+                    <br><br>
+                    <a href="/create"><button class="start">Get Started</button></a>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
         </div>
         <div class="curve"></div>
+
+        <br><br>
+
+        <div class="container">
+            <h1 style="text-align: center; font-family: 'Bree Serif';">SERVICES</h1>
+            <hr class="serviceHr">
+            <div class="row info">
+                <div class="col-md-4">
+                    <div class="card provideCard">
+                        <img class="card-img-top" src="../images/create.png" alt="Card image" style="width:100%">
+                        <div class="card-body">
+                            <h5 class="card-title" style="margin-top: 17px;"><b>Create!</b></h5>
+                            <p class="card-text">Create Hospital specific Covid-19 table...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card provideCard">
+                        <img class="card-img-top" src="../images/insert.png" alt="Card image" style="width:100%">
+                        <div class="card-body">
+                            <h5 class="card-title" style="margin-top: 17px;"><b>Feed Values!</b></h5>
+                            <p class="card-text">Insert Values to the table that you created...</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card provideCard">
+                        <img class="card-img-top" src="../images/update.png" alt="Card image" style="width:100%">
+                        <div class="card-body">
+                            <h5 class="card-title" style="margin-top: 17px;"><b>Update!</b></h5>
+                            <p class="card-text">Update your previously inserted values!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row info">
+                <div class="col-md-4">
+                    <div class="card provideCard">
+                        <img class="card-img-top" src="../images/csv.png" alt="Card image" style="width:100%">
+                        <div class="card-body">
+                            <h5 class="card-title" style="margin-top: 20px;"><b>Generate CSV!</b></h5>
+                            <p class="card-text">Get CSV File of your data on the fly!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card provideCard">
+                        <img class="card-img-top" src="../images/text.png" alt="Card image" style="width:100%">
+                        <div class="card-body">
+                            <h5 class="card-title" style="margin-top: 33px;"><b>Text and Word</b></h5>
+                            <p class="card-text">Instantly download .txt and .docx files!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card provideCard">
+                        <img class="card-img-top" src="../images/email.png" alt="Card image" style="width:100%">
+                        <div class="card-body">
+                            <h5 class="card-title" style="margin-top: 17px;"><b>Instructions</b></h5>
+                            <p class="card-text">On creating a table you'll receive all the guidelines to proceed further!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+
     </body>
 </html>
