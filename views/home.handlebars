@@ -13,23 +13,20 @@
        <link rel="stylesheet" type="text/css" href="../css/styles.css">
     </head>
     <body>
-        <nav class="navbar navbar-expand-md">
-            <a class="navbar-brand" href="/">Covinfo</a>
+        <nav class="navbar navbar-expand-md fixed-top">
+            <a class="navbar-brand" href="/" style="font-family: 'Bree Serif';"><h4 style="color: #000099;">Covinfo <i class="fas fa-virus"></i></h4></a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
             </button>
 
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                        <h5><a style="color: #000099; font-family: 'Bree Serif';" class="nav-link" href="/"><i class="fas fa-home"></i> Home</a></h5>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    <li style="font-family: 'Bree Serif'; font-size: 18.75px;" class="nav-item dropdown dropleft">
+                        <a style="color: #000099;" class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                             Start Here!
                         </a>
                         <div class="dropdown-menu">
@@ -45,7 +42,7 @@
         </nav>
 
         <div class="jumbotron introDiv">
-            <h1 style="font-family: 'Bree Serif';"><i class="fas fa-pills"></i> &nbsp; Welcome to Covinfo! &nbsp; <i class="fas fa-capsules"></i></h1>
+            <h1 style="font-family: 'Bree Serif';"><i class="fas fa-pills"></i> &nbsp; Covinfo &nbsp; <i class="fas fa-capsules"></i></h1>
             <hr class="introHr">
             <br>
             <div class="row">
@@ -125,7 +122,51 @@
                 </div>
             </div>
         </div>
-        <br>
+
+        <br><br><br>
+
+        <div class="upcurve"></div>
+
+        <div class="jumbotron about">
+            <div class="container">
+                <h1 style="text-align: center; font-family: 'Bree Serif';">ABOUT</h1>
+                <hr class="aboutHr">
+                <br>
+                <div class="row">
+                    <div class="col-md-5">
+                        <h4><i class="far fa-user"></i> &nbsp; <b>Chinmay Karmokar</b></h4>
+                        <hr>
+                        <br>
+                        <h6>I am a second year electrical engineering student who has a lot of interest in programming and specifically in front-end development.</h6>
+                        <h6>I use JavaScript to develop most of the things. I look forward to working in NodeJS and React.</h6>
+                        <h6>You can check my GitHub profile for more.</h6>
+                        <hr>
+                        <h3 style="font-family: 'Bree Serif';">Stack</h3>
+                        <h2><i class="fab fa-node-js"></i> <i class="fab fa-css3-alt"></i></h2>
+                    </div>
+                    <div class="col-md-1">
+                        &nbsp;
+                        &nbsp;
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card abtCard">
+                            <div class="card-body">
+                                <h3 style="font-family: 'Bree Serif';"><i class="far fa-star"></i> &nbsp; SOCIALS</h3>
+                                <hr>
+                                <br>
+                                <h6>Connect with me on LinkedIn and GitHub</h6>
+                                <br>
+                                <a target="_blank" href="https://www.linkedin.com/in/chinmay-karmokar-b0042b174/" style="font-size: 40px; margin-right: 10px; color: #0077b5"><i class="fab fa-linkedin-in"></i></a>
+                                <a target="_blank" href="https://github.com/chinmaykarmokar" style="font-size: 40px; margin-right: 10px; color: #333"><i class="fab fa-github"></i></a>
+                                <br><br>
+                                <a target="_blank" href="/create" href="https://github.com/chinmaykarmokar/covinfo"><button class="start">Project Repository</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
 
     </body>
 </html>

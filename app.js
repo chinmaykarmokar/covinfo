@@ -100,7 +100,7 @@ app.post('/tableCreated', (req, res) => {
             }
         });
 
-        res.send('Table for your Hospital created');
+        res.render('home', {layout:false});
     })
 })
 
