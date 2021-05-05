@@ -71,6 +71,10 @@ app.get('/text', (req, res) => {
     res.render('text', { layout: false });
 })
 
+app.get('/showTable', (req,res) => {
+    res.render('showTable', { layout:false });
+})
+
 // POST Responses
 
 app.post('/tableCreated', (req, res) => {
@@ -193,26 +197,74 @@ app.post('/yourdata', (req, res) => {
     console.log(showQuery);
 
     connection.query(showQuery, (err, result, fields) => {
-        if (err) throw err;
 
-        let textToSend = 
-        `DAILY COVID-19 REPORT FROM ` + nameOfTable + ` FOR: ` + date + `\n` +
-        ` ` + `\n` +
-        `Number of New Patients admitted today: ` + Object.values(result[0])[0] + `\n` +
-        `Number Of Patients Discharged Today: ` + Object.values(result[0])[1] + `\n` +
-        `Number Of Active Patients: ` + Object.values(result[0])[2] + `\n` +
-        `Number Of Deaths Today: ` + Object.values(result[0])[3] + `\n` +
-        `Number Of Patients Critical: ` + Object.values(result[0])[4] + `\n` +
-        `Number Of Beds Avaialble: ` + Object.values(result[0])[5] + `\n` +
-        `Number Of ICU Beds Available: ` + Object.values(result[0])[6] + `\n` +
-        `Number Of Remdesivir Injections In Stock: ` + Object.values(result[0])[7] + `\n` +
-        `Number Of Tocilizumab Injections In Stock: ` + Object.values(result[0])[8] + `\n` +
-        `Amount Of Oxygen Left: ` + Object.values(result[0])[9];
+        try {
+            if (err) {
+                res.send(err);
+                console.log(err);
+            }
+            else {
+                let textToSend = 
+                `DAILY COVID-19 REPORT FROM ` + nameOfTable + ` FOR: ` + date + `\n` +
+                ` ` + `\n` +
+                `Number of New Patients admitted today: ` + Object.values(result[0])[0] + `\n` +
+                `Number Of Patients Discharged Today: ` + Object.values(result[0])[1] + `\n` +
+                `Number Of Active Patients: ` + Object.values(result[0])[2] + `\n` +
+                `Number Of Deaths Today: ` + Object.values(result[0])[3] + `\n` +
+                `Number Of Patients Critical: ` + Object.values(result[0])[4] + `\n` +
+                `Number Of Beds Avaialble: ` + Object.values(result[0])[5] + `\n` +
+                `Number Of ICU Beds Available: ` + Object.values(result[0])[6] + `\n` +
+                `Number Of Remdesivir Injections In Stock: ` + Object.values(result[0])[7] + `\n` +
+                `Number Of Tocilizumab Injections In Stock: ` + Object.values(result[0])[8] + `\n` +
+                `Amount Of Oxygen Left: ` + Object.values(result[0])[9];
 
-        res.setHeader('Content-disposition', 'attachment; filename=' + fileName);
-        res.set('Content-Type', 'text/csv');
-        res.status(200).send(textToSend);
+                res.setHeader('Content-disposition', 'attachment; filename=' + fileName);
+                res.set('Content-Type', 'text/csv');
+                res.status(200).send(textToSend);
+            }
+        }
 
+        catch (err) {
+            console.log(err);
+        }          
+
+    })
+})
+
+app.post('/seeTable', (req,res) => {
+    let table = req.body.tablename;
+
+    let tableQuery = "SELECT * FROM " + table;
+
+    connection.query(tableQuery, (err,result,fields) => {
+        
+        try {
+            if (err) {
+                res.send(err);
+                console.log(err);
+            }
+            else {
+                res.render('seeTable', { 
+                    layout:false,
+                    col1: fields[0].name,
+                    col2: fields[1].name,
+                    col3: fields[2].name,
+                    col4: fields[3].name,
+                    col5: fields[4].name,
+                    col6: fields[5].name,
+                    col7: fields[6].name,
+                    col8: fields[7].name,
+                    col9: fields[8].name,
+                    col10: fields[9].name,
+                    col11: fields[10].name,
+                    result: result
+                })
+            }
+        }
+
+        catch (err) {
+            console.log(err);
+        }  
     })
 })
 

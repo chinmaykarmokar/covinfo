@@ -1,7 +1,6 @@
 <html>
     <head>
-        <title>Covinfo - Download Text Or Word File</title>
-        <title>Covinfo - Generate Your CSV File</title>
+        <title>Covinfo - See Your Table</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -43,39 +42,42 @@
             </div>
         </nav>
 
-    <br><br><br>
+        <br><br><br>
 
-        <div class="alert alert-primary">
-            <p></p>
-            <p>Generate <b>Text</b> or <b>Word</b> File from the table you created.</p>
+        <div class="control">
+            <table class="table">
+                <tr>
+                    <th>{{col1}}</th>
+                    <th>{{col2}}</th>
+                    <th>{{col3}}</th>
+                    <th>{{col4}}</th>
+                    <th>{{col5}}</th>
+                    <th>{{col6}}</th>
+                    <th>{{col7}}</th>
+                    <th>{{col8}}</th>
+                    <th>{{col9}}</th>
+                    <th>{{col10}}</th>
+                    <th class="th">{{col11}}</th>
+                </tr>
+                {{#each result}}
+                    <tr>
+                        <td>{{this.Number_Of_New_Covid19_Patients_Admiited_Today}}</td>
+                        <td>{{this.Number_Of_Patients_Discharged_Today}}</td>
+                        <td>{{this.Number_Of_Active_Patients}}</td>
+                        <td>{{this.Number_Of_Deaths_Today}}</td>
+                        <td>{{this.Number_Of_Patients_Critical}}</td>
+                        <td>{{this.Number_Of_Beds_Available}}</td>
+                        <td>{{this.Number_Of_ICU_Beds_Avaialable}}</td>
+                        <td>{{this.Number_Of_Remdesivir_Injections_In_Stock}}</td>
+                        <td>{{this.Number_Of_Tocilizumab_Injections_In_Stock}}</td>
+                        <td>{{this.Amount_Of_Oxygen_Left}}</td>
+                        <td class="td">{{this.Date}}</td>
+                    </tr>
+                {{/each}}
+            </table>
         </div>
-
-        <br>
-
-        <div class="container">
-            <form method="POST" action="/yourdata">
-                <div class="form-group">
-                    <label>Enter name of your table</label>
-                    <input type="text" class="form-control" name="name">
-                </div>
-                <br>
-                <div class="form-group">
-                    <label>Enter the date for which you want the data for</label>
-                    <input type="date" class="form-control" name="date">
-                </div>
-                <br>
-                <div class="form-group">
-                    <label>Name Your File</label>
-                    <input type="text" class="form-control" name="file">
-                </div>
-                <br>
-                <p class="full">
-                    <button type="submit" class="allPurposeBtn">Download</button>
-                </p>
-            </form>
-        </div>
-
-        <br>
+        
+        <br><br>
 
         <div class="upcurve"></div>
 
@@ -118,7 +120,7 @@
                 </div>
                 <br>
             </div>
-        </div>
-
+        </div>       
+                
     </body>
 </html>
