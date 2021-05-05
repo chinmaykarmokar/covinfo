@@ -1,7 +1,6 @@
 <html>
     <head>
-        <title>Covinfo - Download Text Or Word File</title>
-        <title>Covinfo - Generate Your CSV File</title>
+        <title>Covinfo - See Your Table</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -43,35 +42,23 @@
             </div>
         </nav>
 
-    <br><br><br>
+        <br><br><br>
 
         <div class="alert alert-primary">
             <p></p>
-            <p>Generate <b>Text</b> or <b>Word</b> File from the table you created.</p>
+            <p>Enter your table name and click to see the preview.</p>
         </div>
 
         <br>
 
         <div class="container">
-            <form method="POST" action="/yourdata">
+            <form method="POST" action="/seeTable">
                 <div class="form-group">
-                    <label>Enter name of your table</label>
-                    <input type="text" class="form-control" name="name">
+                    <label>Enter the name of your Table</label>
+                    <input type="text" class="form-control" name="tablename">
+                    <br>
+                    <button type="submit" class="allPurposeBtn">Submit</button>
                 </div>
-                <br>
-                <div class="form-group">
-                    <label>Enter the date for which you want the data for</label>
-                    <input type="date" class="form-control" name="date">
-                </div>
-                <br>
-                <div class="form-group">
-                    <label>Name Your File</label>
-                    <input type="text" class="form-control" name="file">
-                </div>
-                <br>
-                <p class="full">
-                    <button type="submit" class="allPurposeBtn">Download</button>
-                </p>
             </form>
         </div>
 
@@ -118,7 +105,6 @@
                 </div>
                 <br>
             </div>
-        </div>
-
+        </div>        
     </body>
 </html>
