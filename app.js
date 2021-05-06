@@ -84,27 +84,37 @@ app.post('/tableCreated', (req, res) => {
     let create_table = "CREATE TABLE" + ' ' + create_table_name + ' ' + "(Number_Of_New_Covid19_Patients_Admiited_Today INT(10), Number_Of_Patients_Discharged_Today INT(10), Number_Of_Active_Patients INT(10), Number_Of_Deaths_Today INT(10), Number_Of_Patients_Critical INT(10), Number_Of_Beds_Available INT(10), Number_Of_ICU_Beds_Available INT(10), Number_Of_Remdesivir_Injections_In_Stock INT(10), Number_Of_Tocilizumab_Injections_In_Stock INT(10), Amount_Of_Oxygen_Left VARCHAR(255), Date TIMESTAMP, PRIMARY KEY (Date))";
 
     connection.query(create_table, (err) => {
-        if (err) throw err;
-
-        let mailOptions = {
-            from: credentials.email,
-            to: emailID,
-            subject: 'Covinfo: Your Table is ready!',
-            html: '<p>Thanks for using Reportly, you have your first table!</p><b>Table Name: ' + create_table_name + `</b>
-            <p>Your table was created with default columns named Number_Of_New_Covid19_Patients_Admiited_Today, Number_Of_Patients_Discharged_Today, Number_Of_Patients_Critical, Number_Of_Beds_Available, Number_Of_ICU_Beds_Available, Number_Of_Remdesivir_Injections_In_Stock, Number_Of_Tocilizumab_Injections_In_Stock, Amount_Of_Oxygen_Left & Date.</p>
-            <p>You can edit them as per your preferred column names later under "Modify Your Hospital Table" section...</p>
-            <p>Use these credentials for further use... Thank you!</p>`
-        };
-
-        transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Email sent: ' + info.response);
+        try {
+            if (err) {
+                res.render('error', { layout:false });
+                console.log(err);
             }
-        });
+            else {
+                let mailOptions = {
+                    from: credentials.email,
+                    to: emailID,
+                    subject: 'Covinfo: Your Table is ready!',
+                    html: '<p>Thanks for using Reportly, you have your first table!</p><b>Table Name: ' + create_table_name + `</b>
+                    <p>Your table was created with default columns named Number_Of_New_Covid19_Patients_Admiited_Today, Number_Of_Patients_Discharged_Today, Number_Of_Patients_Critical, Number_Of_Beds_Available, Number_Of_ICU_Beds_Available, Number_Of_Remdesivir_Injections_In_Stock, Number_Of_Tocilizumab_Injections_In_Stock, Amount_Of_Oxygen_Left & Date.</p>
+                    <p>You can edit them as per your preferred column names later under "Modify Your Hospital Table" section...</p>
+                    <p>Use these credentials for further use... Thank you!</p>`
+                };
+        
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                });
+        
+                res.render('tableCreated', {layout:false});
+            }
+        }
 
-        res.render('home', {layout:false});
+        catch (err) {
+            console.log(err);
+        }
     })
 })
 
@@ -122,36 +132,75 @@ app.post('/inserted', (req, res) => {
     let field10 = req.body.field10;
     let date = req.body.date;
 
-    let sql = "SHOW COLUMNS FROM " + name_of_table;
+    let insert = "INSERT INTO" + ' ' + name_of_table + ' ' + "(Number_Of_New_Covid19_Patients_Admiited_Today, Number_Of_Patients_Discharged_Today, Number_Of_Active_Patients, Number_Of_Deaths_Today, Number_Of_Patients_Critical, Number_Of_Beds_Available,Number_Of_ICU_Beds_Available, Number_Of_Remdesivir_Injections_In_Stock, Number_Of_Tocilizumab_Injections_In_Stock, Amount_Of_Oxygen_Left, Date) VALUES ?"
+    let from_form = [field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, date];
+    console.log(from_form);
+    let values = [];
+    let final_values = values.push(from_form);
+    console.log(values);
 
-    connection.query(sql, (err, rows, fields) => {
-        if (err) throw err;
+    connection.query(insert, [values], (err, rows, fields) => {
 
-        let insert = "INSERT INTO" + ' ' + name_of_table + ' ' + "(" + rows[0].Field + "," + rows[1].Field + "," + rows[2].Field + "," + rows[3].Field + "," + rows[4].Field + "," + rows[5].Field + "," + rows[6].Field + "," + rows[7].Field + "," + rows[8].Field + "," + rows[9].Field + "," + rows[10].Field + ") VALUES ?"
-
-        let from_form = [field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, date];
-        console.log(from_form);
-        let values = [];
-        let final_values = values.push(from_form);
-        console.log(values);
-
-        connection.query(insert, [values], (err) => {
             try {
                 if (err) {
-                    res.send(err);
-                    console.log(err);
+                    res.render('error', { layout: false });
                 }
                 else {
-                    res.send('No errors found. Values inserted');
+                    res.render('valueInserted', {layout: false});
                 }
             }
 
             catch (err) {
                 console.log(err);
             }
-        })
+           
     })
 })
+
+// app.post('/inserted', (req, res) => {
+//     let name_of_table = req.body.table;
+//     let field1 = req.body.field1;
+//     let field2 = req.body.field2;
+//     let field3 = req.body.field3;
+//     let field4 = req.body.field4;
+//     let field5 = req.body.field5;
+//     let field6 = req.body.field6;
+//     let field7 = req.body.field7;
+//     let field8 = req.body.field8;
+//     let field9 = req.body.field9;
+//     let field10 = req.body.field10;
+//     let date = req.body.date;
+
+//     let sql = "SHOW COLUMNS FROM " + name_of_table;
+
+//     connection.query(sql, (err, rows, fields) => {
+//         if (err) res.send(err.sqlMessage);
+        
+//         let insert = "INSERT INTO" + ' ' + name_of_table + ' ' + "(" + rows[0].Field + "," + rows[1].Field + "," + rows[2].Field + "," + rows[3].Field + "," + rows[4].Field + "," + rows[5].Field + "," + rows[6].Field + "," + rows[7].Field + "," + rows[8].Field + "," + rows[9].Field + "," + rows[10].Field + ") VALUES ?"
+
+//         let from_form = [field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, date];
+//         console.log(from_form);
+//         let values = [];
+//         let final_values = values.push(from_form);
+//         console.log(values);
+
+//         connection.query(insert, [values], (err) => {
+//             try {
+//                 if (err) {
+//                     res.send(err);
+//                 }
+//                 else {
+//                     res.render('valueInserted', {layout: false});
+//                 }
+//             }
+
+//             catch (err) {
+//                 console.log(err);
+//             }
+//             connection.end();
+//         })
+//     })
+// })
 
 let file = [];
 
@@ -165,10 +214,22 @@ app.post('/preview', (req, res) => {
     let select = "SELECT * FROM " + name_of_table;
 
     connection.query(select, (err, result, fields) => {
-        const csvString = json2csv(result);
-        res.setHeader('Content-disposition', 'attachment; filename=' + file[file.length - 1] + '.csv');
-        res.set('Content-Type', 'text/csv');
-        res.status(200).send(csvString);
+        try {
+            if (err) {
+                res.render('error', { layout:false });
+                console.log(err);
+            }
+            else {
+                const csvString = json2csv(result);
+                res.setHeader('Content-disposition', 'attachment; filename=' + file[file.length - 1] + '.csv');
+                res.set('Content-Type', 'text/csv');
+                res.status(200).send(csvString); 
+            }
+        }
+    
+        catch (err) {
+            console.log(err);
+        }
     })
 })
 
@@ -181,9 +242,19 @@ app.post('/updated', (req, res) => {
     let update_query = "UPDATE " + tableName + " SET " + column + " =" + "'" + newVal + "'" + " WHERE Date = " + "'" + date + "'";
 
     connection.query(update_query, (err, result) => {
-        if (err) throw err;
-
-        res.send('Values provided by you have been updated by the values provided by you...')
+        try {
+            if (err) {
+                res.render('error', { layout:false });
+                console.log(err);
+            }
+            else {
+                res.render('updated', {layout:false});
+            }
+        }
+    
+        catch (err) {
+            console.log(err);
+        }
     })
 })
 
@@ -200,7 +271,7 @@ app.post('/yourdata', (req, res) => {
 
         try {
             if (err) {
-                res.send(err);
+                res.render('error', { layout:false });
                 console.log(err);
             }
             else {
@@ -240,7 +311,7 @@ app.post('/seeTable', (req,res) => {
         
         try {
             if (err) {
-                res.send(err);
+                res.render('error', { layout:false });
                 console.log(err);
             }
             else {
