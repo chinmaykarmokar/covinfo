@@ -9,6 +9,8 @@
     padding: 10px;
     margin-left: 5px;
     margin-right: 5px;
+    animation: fadeIn;
+    animation-duration: 5s;
 }
 
 .start {
@@ -49,6 +51,8 @@ nav {
 
 .info {
     padding: 5px;
+    animation: zoomIn; /* referring directly to the animation's @keyframe declaration */
+    animation-duration: 5s;
 }
 
 .fa-pills {

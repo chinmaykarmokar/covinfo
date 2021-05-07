@@ -94,9 +94,14 @@ app.post('/tableCreated', (req, res) => {
                     from: credentials.email,
                     to: emailID,
                     subject: 'Covinfo: Your Table is ready!',
-                    html: '<p>Thanks for using Reportly, you have your first table!</p><b>Table Name: ' + create_table_name + `</b>
+                    html: '<p>Thanks for using Covinfo, you have your first table!</p><b>Table Name: ' + create_table_name + `</b>
                     <p>Your table was created with default columns named Number_Of_New_Covid19_Patients_Admiited_Today, Number_Of_Patients_Discharged_Today, Number_Of_Patients_Critical, Number_Of_Beds_Available, Number_Of_ICU_Beds_Available, Number_Of_Remdesivir_Injections_In_Stock, Number_Of_Tocilizumab_Injections_In_Stock, Amount_Of_Oxygen_Left & Date.</p>
-                    <p>You can edit them as per your preferred column names later under "Modify Your Hospital Table" section...</p>
+                    <p><b>Step 1: </b>You have already created your table.</p>
+                    <p><b>Step 2: </b>You can now go to the <b>Feed Values</b> section to populate your table.</p>
+                    <p><b>Step 3 (Optional): </b>Incase you have made any mistake while sending your data you can rectify them in the <b>Update Values' section.</b>
+                    <p><b>Step 4: </b>You can see how your table looks like in the <b>See Preview Of your Table</b> section.</p>
+                    <p><b>Step 5: </b>Download your data as CSV file from the <b>Generate CSV</b> section.</p>
+                    <p><b>Step 6: </b>Download text and word file of your data from the <b>Generate Text or Word File</b> section.</p>
                     <p>Use these credentials for further use... Thank you!</p>`
                 };
         
@@ -117,45 +122,6 @@ app.post('/tableCreated', (req, res) => {
         }
     })
 })
-
-// app.post('/inserted', (req, res) => {
-//     let name_of_table = req.body.table;
-//     let field1 = req.body.field1;
-//     let field2 = req.body.field2;
-//     let field3 = req.body.field3;
-//     let field4 = req.body.field4;
-//     let field5 = req.body.field5;
-//     let field6 = req.body.field6;
-//     let field7 = req.body.field7;
-//     let field8 = req.body.field8;
-//     let field9 = req.body.field9;
-//     let field10 = req.body.field10;
-//     let date = req.body.date;
-
-//     let insert = "INSERT INTO" + ' ' + name_of_table + ' ' + "(Number_Of_New_Covid19_Patients_Admiited_Today, Number_Of_Patients_Discharged_Today, Number_Of_Active_Patients, Number_Of_Deaths_Today, Number_Of_Patients_Critical, Number_Of_Beds_Available,Number_Of_ICU_Beds_Available, Number_Of_Remdesivir_Injections_In_Stock, Number_Of_Tocilizumab_Injections_In_Stock, Amount_Of_Oxygen_Left, Date) VALUES ?"
-//     let from_form = [field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, date];
-//     console.log(from_form);
-//     let values = [];
-//     let final_values = values.push(from_form);
-//     console.log(values);
-
-//     connection.query(insert, [values], (err, rows, fields) => {
-
-//             try {
-//                 if (err) {
-//                     res.render('error', { layout: false });
-//                 }
-//                 else {
-//                     res.render('valueInserted', {layout: false});
-//                 }
-//             }
-
-//             catch (err) {
-//                 console.log(err);
-//             }
-           
-//     })
-// })
 
 app.post('/inserted', (req, res) => {
     let name_of_table = req.body.table;
