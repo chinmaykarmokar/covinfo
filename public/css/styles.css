@@ -167,7 +167,46 @@ td {
     border-radius: 0px;
 }
 
-
 .error404 {
     padding: 20px;
+}
+
+@media only screen and (min-width: 320px) {
+    .about {
+        height: 950px;
+        margin-bottom: 0;
+        background-image: linear-gradient(#e6fff2, #80ffff, #e6ffff);
+    }    
+}
+
+@media only screen and (min-width: 375px) {
+    .about {
+        height: 900px;
+        margin-bottom: 0;
+        background-image: linear-gradient(#e6fff2, #80ffff, #e6ffff);
+    }    
+}
+
+@media only screen and (min-width: 425px) {
+    .about {
+        height: 850px;
+        margin-bottom: 0;
+        background-image: linear-gradient(#e6fff2, #80ffff, #e6ffff);
+    }    
+}
+
+@media only screen and (min-width: 768px) {
+    .about {
+        height: 625px;
+        margin-bottom: 0;
+        background-image: linear-gradient(#e6fff2, #80ffff, #e6ffff);
+    }    
+}
+
+@media only screen and (min-width: 992px) {
+    .about {
+        height: 550px;
+        margin-bottom: 0;
+        background-image: linear-gradient(#e6fff2, #80ffff, #e6ffff);
+    }    
 }
