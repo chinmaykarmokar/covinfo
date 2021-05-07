@@ -118,45 +118,6 @@ app.post('/tableCreated', (req, res) => {
     })
 })
 
-app.post('/inserted', (req, res) => {
-    let name_of_table = req.body.table;
-    let field1 = req.body.field1;
-    let field2 = req.body.field2;
-    let field3 = req.body.field3;
-    let field4 = req.body.field4;
-    let field5 = req.body.field5;
-    let field6 = req.body.field6;
-    let field7 = req.body.field7;
-    let field8 = req.body.field8;
-    let field9 = req.body.field9;
-    let field10 = req.body.field10;
-    let date = req.body.date;
-
-    let insert = "INSERT INTO" + ' ' + name_of_table + ' ' + "(Number_Of_New_Covid19_Patients_Admiited_Today, Number_Of_Patients_Discharged_Today, Number_Of_Active_Patients, Number_Of_Deaths_Today, Number_Of_Patients_Critical, Number_Of_Beds_Available,Number_Of_ICU_Beds_Available, Number_Of_Remdesivir_Injections_In_Stock, Number_Of_Tocilizumab_Injections_In_Stock, Amount_Of_Oxygen_Left, Date) VALUES ?"
-    let from_form = [field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, date];
-    console.log(from_form);
-    let values = [];
-    let final_values = values.push(from_form);
-    console.log(values);
-
-    connection.query(insert, [values], (err, rows, fields) => {
-
-            try {
-                if (err) {
-                    res.render('error', { layout: false });
-                }
-                else {
-                    res.render('valueInserted', {layout: false});
-                }
-            }
-
-            catch (err) {
-                console.log(err);
-            }
-           
-    })
-})
-
 // app.post('/inserted', (req, res) => {
 //     let name_of_table = req.body.table;
 //     let field1 = req.body.field1;
@@ -171,23 +132,18 @@ app.post('/inserted', (req, res) => {
 //     let field10 = req.body.field10;
 //     let date = req.body.date;
 
-//     let sql = "SHOW COLUMNS FROM " + name_of_table;
+//     let insert = "INSERT INTO" + ' ' + name_of_table + ' ' + "(Number_Of_New_Covid19_Patients_Admiited_Today, Number_Of_Patients_Discharged_Today, Number_Of_Active_Patients, Number_Of_Deaths_Today, Number_Of_Patients_Critical, Number_Of_Beds_Available,Number_Of_ICU_Beds_Available, Number_Of_Remdesivir_Injections_In_Stock, Number_Of_Tocilizumab_Injections_In_Stock, Amount_Of_Oxygen_Left, Date) VALUES ?"
+//     let from_form = [field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, date];
+//     console.log(from_form);
+//     let values = [];
+//     let final_values = values.push(from_form);
+//     console.log(values);
 
-//     connection.query(sql, (err, rows, fields) => {
-//         if (err) res.send(err.sqlMessage);
-        
-//         let insert = "INSERT INTO" + ' ' + name_of_table + ' ' + "(" + rows[0].Field + "," + rows[1].Field + "," + rows[2].Field + "," + rows[3].Field + "," + rows[4].Field + "," + rows[5].Field + "," + rows[6].Field + "," + rows[7].Field + "," + rows[8].Field + "," + rows[9].Field + "," + rows[10].Field + ") VALUES ?"
+//     connection.query(insert, [values], (err, rows, fields) => {
 
-//         let from_form = [field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, date];
-//         console.log(from_form);
-//         let values = [];
-//         let final_values = values.push(from_form);
-//         console.log(values);
-
-//         connection.query(insert, [values], (err) => {
 //             try {
 //                 if (err) {
-//                     res.send(err);
+//                     res.render('error', { layout: false });
 //                 }
 //                 else {
 //                     res.render('valueInserted', {layout: false});
@@ -197,10 +153,63 @@ app.post('/inserted', (req, res) => {
 //             catch (err) {
 //                 console.log(err);
 //             }
-//             connection.end();
-//         })
+           
 //     })
 // })
+
+app.post('/inserted', (req, res) => {
+    let name_of_table = req.body.table;
+    let field1 = req.body.field1;
+    let field2 = req.body.field2;
+    let field3 = req.body.field3;
+    let field4 = req.body.field4;
+    let field5 = req.body.field5;
+    let field6 = req.body.field6;
+    let field7 = req.body.field7;
+    let field8 = req.body.field8;
+    let field9 = req.body.field9;
+    let field10 = req.body.field10;
+    let date = req.body.date;
+
+    let sql = "SHOW COLUMNS FROM " + name_of_table;
+
+    connection.query(sql, (err, rows, fields) => {
+        try {
+            if (err) {
+                res.render('error', { layout: false });
+            }
+            else {
+                let insert = "INSERT INTO" + ' ' + name_of_table + ' ' + "(" + rows[0].Field + "," + rows[1].Field + "," + rows[2].Field + "," + rows[3].Field + "," + rows[4].Field + "," + rows[5].Field + "," + rows[6].Field + "," + rows[7].Field + "," + rows[8].Field + "," + rows[9].Field + "," + rows[10].Field + ") VALUES ?"
+
+                let from_form = [field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, date];
+                console.log(from_form);
+                let values = [];
+                let final_values = values.push(from_form);
+                console.log(values);
+
+                connection.query(insert, [values], (err) => {
+                    try {
+                        if (err) {
+                            res.render('error', { layout: false });
+                        }
+                        else {
+                            res.render('valueInserted', {layout: false});
+                        }
+                    }
+
+                    catch (err) {
+                        console.log(err);
+                    }
+                    connection.end();
+                })       
+            }
+        }
+
+        catch (err) {
+            console.log(err);
+        }
+    })
+})
 
 let file = [];
 
