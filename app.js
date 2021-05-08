@@ -81,7 +81,7 @@ app.post('/tableCreated', (req, res) => {
     let create_table_name = req.body.table_name;
     let emailID = req.body.email;
 
-    let create_table = "CREATE TABLE" + ' ' + create_table_name + ' ' + "(Number_Of_New_Covid19_Patients_Admiited_Today INT(10), Number_Of_Patients_Discharged_Today INT(10), Number_Of_Active_Patients INT(10), Number_Of_Deaths_Today INT(10), Number_Of_Patients_Critical INT(10), Number_Of_Beds_Available INT(10), Number_Of_ICU_Beds_Available INT(10), Number_Of_Remdesivir_Injections_In_Stock INT(10), Number_Of_Tocilizumab_Injections_In_Stock INT(10), Amount_Of_Oxygen_Left VARCHAR(255), Date TIMESTAMP, PRIMARY KEY (Date))";
+    let create_table = "CREATE TABLE" + ' ' + create_table_name + ' ' + "(Number_Of_New_Covid19_Patients_Admiited_Today INT(10), Number_Of_Patients_Discharged_Today INT(10), Number_Of_Active_Patients INT(10), Number_Of_Deaths_Today INT(10), Number_Of_Patients_Critical INT(10), Number_Of_Beds_Available INT(10), Number_Of_ICU_Beds_Available INT(10), Number_Of_Remdesivir_Injections_In_Stock INT(10), Number_Of_Tocilizumab_Injections_In_Stock INT(10), Amount_Of_Oxygen_Left VARCHAR(255), Date DATE, PRIMARY KEY (Date))";
 
     connection.query(create_table, (err) => {
         try {
