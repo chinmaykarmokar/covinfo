@@ -166,7 +166,6 @@ app.post('/inserted', (req, res) => {
                     catch (err) {
                         console.log(err);
                     }
-                    connection.end();
                 })       
             }
         }
