@@ -214,3 +214,11 @@ td {
         background-image: linear-gradient(#e6fff2, #80ffff, #e6ffff);
     }    
 }
+
+@media only screen and (min-width: 1024px) {
+    .about {
+        height: 550px;
+        margin-bottom: 0;
+        background-image: linear-gradient(#e6fff2, #80ffff, #e6ffff);
+    }    
+}
