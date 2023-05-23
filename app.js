@@ -36,17 +36,13 @@ connection.connect((err) => {
     if (err) throw err;
 })
 
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    secure: true,
-    auth: {
-        user: credentials.email,
-        pass: credentials.pass
-    },
-    tls: {
-        rejectUnauthorized: false
-    }
-});
+// Use Environment Variables
+const dotenv = require("dotenv");
+dotenv.config();
+
+// Import Sendgrid
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process?.env?.SENDGRID_API_KEY);
 
 // GET Responses:
 
@@ -108,13 +104,15 @@ app.post('/tableCreated', (req, res) => {
                     <p>Use these credentials for further use... Thank you!</p>`
                 };
         
-                transporter.sendMail(mailOptions, function (error, info) {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log('Email sent: ' + info.response);
-                    }
-                });
+                sgMail.send(mailOptions)
+                    .then((error,response) => {
+                        if (error) {
+                            console.log("There was an error.");
+                        }
+                        else {
+                            console.log(response);
+                        }
+                    })
         
                 res.render('tableCreated', {layout:false});
             }
