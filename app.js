@@ -90,7 +90,7 @@ app.post('/tableCreated', (req, res) => {
             }
             else {
                 let mailOptions = {
-                    from: credentials.email,
+                    from: credentials?.email,
                     to: emailID,
                     subject: 'Covinfo: Your Table is ready!',
                     html: '<p>Thanks for using Covinfo, you have your first table!</p><b>Table Name: ' + create_table_name.toLowerCase() + `</b>
@@ -105,13 +105,8 @@ app.post('/tableCreated', (req, res) => {
                 };
         
                 sgMail.send(mailOptions)
-                    .then((error,response) => {
-                        if (error) {
-                            console.log("There was an error.");
-                        }
-                        else {
-                            console.log(response);
-                        }
+                    .then((response) => {
+                        console.log(response);
                     })
         
                 res.render('tableCreated', {layout:false});
